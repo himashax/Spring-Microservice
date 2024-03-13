@@ -19,11 +19,6 @@ public class ItemController {
         return itemService.addItem(item);
     }
 
-    @GetMapping("")
-    public List<Item> fetchItemList() {
-        return itemService.fetchItemList();
-    }
-
     @GetMapping("/{id}")
     public Item getItemById(@PathVariable("id") Long itemId) {
         return itemService.getItemById(itemId).orElse(null);

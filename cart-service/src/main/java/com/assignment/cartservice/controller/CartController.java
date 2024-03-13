@@ -17,7 +17,6 @@ public class CartController {
 
     @PostMapping("/add/{id}")
     public String addItemToCart(@PathVariable("id") Long itemId) {
-        System.out.println("called the api");
         cartService.addCartItem(2L, itemId);
         return "Item added successfully";
     }
@@ -26,8 +25,9 @@ public class CartController {
         return cartService.getCartItems(cartId);
     }
 
-    @GetMapping("")
-    public String message() {
-        return "Cart service";
+    @DeleteMapping("/{id}")
+    public String removeItemFromCart(@PathVariable("id") Long itemId) throws Exception {
+        return cartService.removeCartItem(itemId);
     }
+
 }

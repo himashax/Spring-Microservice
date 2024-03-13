@@ -12,7 +12,7 @@ spring:
           filters:
             - name: JwtAuthFilter
               args:
-                requiredRole: USER
+                requiredRole: ADMIN
 
 
         - id: cart-service
@@ -22,7 +22,7 @@ spring:
           filters:
             - name: JwtAuthFilter
               args:
-                requiredRole: ADMIN
+                requiredRole: USER
 
         - id: authentication-service
           uri: lb://authentication-service

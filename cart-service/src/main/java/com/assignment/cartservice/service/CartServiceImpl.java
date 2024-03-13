@@ -31,7 +31,6 @@ public class CartServiceImpl implements CartService{
     public List<CartItem> getCartItems(Long cartId) {
         Optional<Cart> optionalCart = cartRepository.findById(cartId);
         Cart cart = optionalCart.get();
-        System.out.println("cart == " + cart.getItems());
         return cart.getItems();
     }
 
@@ -41,14 +40,10 @@ public class CartServiceImpl implements CartService{
         if (optionalCart.isPresent()) {
             Cart cart = optionalCart.get();
 
-            ResponseEntity<CartItem> response = restTemplate.getForEntity("ITEM_MANAGEMENT_SERVICE_URL/items" + itemId, CartItem.class);
+            ResponseEntity<CartItem> response = restTemplate.getForEntity(ITEM_MANAGEMENT_SERVICE_URL + "/items/" + itemId, CartItem.class);
             if (response.getStatusCode() == HttpStatus.OK) {
                 CartItem cartItem = response.getBody();
-                System.out.println("Fetched item: " + cartItem.getName());
-
                 cartItem.setCart(cart);
-
-
                 cartItemRepository.save(cartItem);
 
                 return cartItem;
@@ -57,6 +52,19 @@ public class CartServiceImpl implements CartService{
             }
         } else {
             throw new RuntimeException("Cart not found");
+        }
+    }
+
+    @Override
+    public String removeCartItem(Long itemId) throws Exception {
+        Optional<CartItem> cartItem = cartItemRepository.findById(itemId);
+        CartItem item = cartItem.get();
+
+        if (item != null) {
+            cartItemRepository.delete(item);
+            return "Item removed successfully";
+        } else {
+            throw new RuntimeException("Item not found");
         }
     }
 }

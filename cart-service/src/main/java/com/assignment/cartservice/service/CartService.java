@@ -7,6 +7,6 @@ import java.util.List;
 public interface CartService {
     List<CartItem> getCartItems(Long cartId);
     CartItem addCartItem(Long cartId, Long itemId);
-
+    String removeCartItem(Long itemId) throws Exception;
 
 }

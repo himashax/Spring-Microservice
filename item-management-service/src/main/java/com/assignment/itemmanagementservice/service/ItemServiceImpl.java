@@ -24,8 +24,4 @@ public class ItemServiceImpl implements ItemService{
         return itemRepository.findById(itemId);
     }
 
-    @Override
-    public List<Item> fetchItemList() {
-        return itemRepository.findAll();
-    }
 }

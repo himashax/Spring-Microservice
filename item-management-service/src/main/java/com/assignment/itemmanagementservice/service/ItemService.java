@@ -11,6 +11,4 @@ public interface ItemService {
 
     Optional<Item> getItemById(Long itemId);
 
-    List<Item> fetchItemList();
-
 }
