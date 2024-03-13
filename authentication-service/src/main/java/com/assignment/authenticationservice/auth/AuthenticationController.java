@@ -8,19 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
     @RequestMapping("/auth")
     @RequiredArgsConstructor
     public class AuthenticationController {
         @Autowired
         private AuthenticationService service;
-
-
-        @GetMapping("")
-        public String secret() {
-            return "wo ist dein mutter";
-        }
 
         @PostMapping("/register")
         public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {

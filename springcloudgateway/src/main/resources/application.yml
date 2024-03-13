@@ -10,14 +10,19 @@ spring:
           predicates:
             - Path=/items/**
           filters:
-            - JwtAuthFilter
+            - name: JwtAuthFilter
+              args:
+                requiredRole: USER
+
 
         - id: cart-service
           uri: lb://cart-service
           predicates:
             - Path=/cart/**
           filters:
-            - JwtAuthFilter
+            - name: JwtAuthFilter
+              args:
+                requiredRole: ADMIN
 
         - id: authentication-service
           uri: lb://authentication-service

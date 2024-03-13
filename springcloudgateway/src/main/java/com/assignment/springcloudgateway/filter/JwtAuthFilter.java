@@ -39,6 +39,17 @@ import org.springframework.web.client.RestTemplate;
                     }
                     try {
                         jwtUtil.validateToken(authHeader);
+                        String role = jwtUtil.extractRoleFromToken(authHeader);
+
+                        if (role != null) {
+                            if (config.getRequiredRole().equals(role)) {
+                                return chain.filter(exchange);
+                            } else {
+                                throw new RuntimeException("Insufficient permissions");
+                            }
+                        } else {
+                            throw new RuntimeException("Role not found in token");
+                        }
                     } catch (Exception e) {
                         throw new RuntimeException("");
                     }
@@ -49,6 +60,13 @@ import org.springframework.web.client.RestTemplate;
 
 
         public static class Config {
+            private String requiredRole;
 
+            public String getRequiredRole() {
+                return requiredRole;
+            }
+            public void setRequiredRole(String requiredRole) {
+                this.requiredRole = requiredRole;
+            }
         }
     }
